@@ -35,7 +35,11 @@
     <script src="/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDfQxgWt-LSZcEmTEN8581Uq9SzZHnpuys&sensor=true"></script>
+
     <script>
+
+      var markers = [];
+
       function initialize_gmaps() {
       // initialize new google maps LatLng object
       var myLatlng = new google.maps.LatLng(40.705189,-74.009209);
@@ -57,15 +61,15 @@
       });
 
       // draw some locations on the map
-      var hotelLocation = [40.705137, -74.007624];
-      var restaurantLocations = [
-        [40.705137, -74.013940],
-        [40.708475, -74.010846]
-      ];
-      var activityLocations = [
-        [40.716291, -73.995315],
-        [40.707119, -74.003602]
-      ];
+      // var hotelLocation = [40.705137, -74.007624];
+      // var restaurantLocations = [
+      //   [40.705137, -74.013940],
+      //   [40.708475, -74.010846]
+      // ];
+      // var activityLocations = [
+      //   [40.716291, -73.995315],
+      //   [40.707119, -74.003602]
+      // ];
       function drawLocation (location, opts) {
         if (typeof opts !== 'object') {
           opts = {}
@@ -73,24 +77,39 @@
         opts.position = new google.maps.LatLng(location[0], location[1]);
         opts.map = map;
         var marker = new google.maps.Marker(opts);
+        console.log(marker);
+        markers.push(marker);
       }
-      drawLocation(hotelLocation, {
-        icon: '/images/lodging_0star.png'
-      });
-      restaurantLocations.forEach(function (loc) {
-        drawLocation(loc, {
-          icon: '/images/restaurant.png'
-        });
-      });
-      activityLocations.forEach(function (loc) {
-        drawLocation(loc, {
-          icon: '/images/star-3.png'
-        });
-      });
+
+      function clearOverlays() {
+        for (var i = 0; i < markers.length; i++) {
+          markers[i].setMap(null);
+        }
+        markers.length = 0;
+      }
+
+      // return drawLocation(hotelLocation, {
+      //   icon: '/images/lodging_0star.png'
+      // });
+      // restaurantLocations.forEach(function (loc) {
+      //   drawLocation(loc, {
+      //     icon: '/images/restaurant.png'
+      //   });
+      // });
+      // activityLocations.forEach(function (loc) {
+      //   drawLocation(loc, {
+      //     icon: '/images/star-3.png'
+      //   });
+      // }); 
+      return {
+        drawLocation: drawLocation,
+        clearOverlays: clearOverlays
+      };
     }
 
+    var mapFunctions;
     $(document).ready(function() {
-      initialize_gmaps();
+      mapFunctions = initialize_gmaps();
     });
 
     var styleArr = [{
@@ -154,5 +173,6 @@
       }]
     }];
   </script>
+    <script src="/main.js"></script>  <!-- WHAT WE MADE -->
   </body>
 </html>

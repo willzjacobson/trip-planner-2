@@ -98,10 +98,10 @@ h3 {
   .day-btn:hover {
     border-color: #fff;
     color: #fff; }
-  .day-btn.current-day {
+  .day-btn.currentDay {
     background: #a8c9dd;
     color: #736357; }
-    .day-btn.current-day:hover {
+    .day-btn.currentDay:hover {
       background: #fff; }
 
 .panel-default {
